@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harness Academy - Build Your Very-First Agent Harness</title>
+<meta name="description" content="A free, hands-on course on the machinery every AI agent needs: the loop, tools, context, permissions and recovery. Track one is coding agents, built in sixteen levels with a real Python interpreter in your browser.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<meta name="theme-color" content="#8f4b2e">
+
+<!-- Link previews, for when someone shares the course. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Build Your Very-First Agent Harness">
+<meta property="og:description" content="Every AI agent is a harness around a model. Learn the harness, starting with the one for code. Real Python in your browser, no signup, nothing to install.">
+<meta property="og:url" content="https://harness-academy.schen.app/">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="/src/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;560;600;700;760&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" id="go-map"></span>
+    <span class="brand-name" id="go-map-text">Harness Academy</span>
+    <span class="brand-by">presented by
+      <a href="https://schen.app" target="_blank" rel="noopener noreferrer">schen.app</a>
+    </span>
+  </div>
+  <div class="topbar-right">
+    <span class="runtime-status" id="runtime-status"></span>
+    <div class="xp-track" title="Progress through the course">
+      <div class="xp-fill" id="xp-fill"></div>
+      <span class="xp-label" id="xp-label">0 / 12</span>
+    </div>
+    <button class="ghost" id="btn-map">Map</button>
+    <button class="ghost" id="btn-achievements" title="Achievements, mastery and your data">Achievements</button>
+    <button class="ghost" id="btn-tutor-toggle">Tutor</button>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ===================== MAP ===================== -->
+  <section id="view-map" class="view">
+    <div class="landing" id="landing"></div>
+    <div class="curriculum-head">
+      <h2>The curriculum</h2>
+      <p id="curriculum-sub">Each level opens with a question, not a definition.</p>
+    </div>
+    <!-- The four-act overview. It sits with the level list it summarises,
+         rather than above the pitch where it was the first thing read. -->
+    <div class="landing-diagram" id="curriculum-diagram"></div>
+    <div id="acts"></div>
+    <div class="landing-foot" id="landing-foot"></div>
+  </section>
+
+  <!-- ===================== LEVEL ===================== -->
+  <section id="view-level" class="view hidden">
+    <div class="level-head">
+      <div class="level-titles">
+        <h2 id="level-title"></h2>
+        <p id="level-question"></p>
+      </div>
+      <div class="step-dots" id="step-dots"></div>
+    </div>
+    <div class="level-layout">
+      <nav class="level-rail" id="level-rail">
+        <button class="ghost rail-back" id="btn-back" title="Open the course map">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4Z"/>
+            <path d="M9 4v13"/><path d="M15 6.5v13"/>
+          </svg>
+          <span>Map</span>
+        </button>
+      </nav>
+      <div class="level-body" id="level-body"></div>
+      <aside class="level-toc" id="level-toc"></aside>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== TUTOR ===================== -->
+<aside id="tutor" class="tutor hidden">
+  <div class="tutor-grip" id="tutor-grip" title="Drag to resize"></div>
+  <div class="tutor-head">
+    <div>
+      <strong>Tutor</strong>
+      <span class="tutor-sub" id="tutor-sub">a real coding agent</span>
+    </div>
+    <button class="ghost icon" id="btn-tutor-close">&times;</button>
+  </div>
+  <div class="tutor-log" id="tutor-log">
+    <div class="tutor-intro">
+      <p>I can read the specimen, run commands, and see what you are working on.</p>
+      <p>I will not hand you answers. Ask me what to look at.</p>
+      <div class="chips" id="tutor-chips"></div>
+    </div>
+  </div>
+  <div class="tutor-quote hidden" id="tutor-quote"></div>
+  <form class="tutor-input" id="tutor-form">
+    <textarea id="tutor-text" rows="2" placeholder="Ask the tutor..." ></textarea>
+    <button class="primary" type="submit" id="tutor-send">Ask</button>
+  </form>
+</aside>
+
+<!-- ===================== SKILL MAP =====================
+     Floats above whatever you were reading, rather than navigating away
+     from it: opening the map from inside a level should not discard the
+     level. -->
+<div class="mapview hidden" id="mapview">
+  <div class="mapview-card">
+    <div class="mapview-head">
+      <div>
+        <strong>Course map</strong>
+        <span class="mapview-sub" id="mapview-sub"></span>
+      </div>
+      <button class="ghost icon" id="mapview-close">&times;</button>
+    </div>
+    <div class="mapview-body" id="mapview-body"></div>
+    <div class="mapview-legend">
+      <span class="map-key done">done</span>
+      <span class="map-key open">open</span>
+      <span class="map-key locked">locked</span>
+      <span class="mapview-hint">Arrows point from a level to what it unlocks.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODALS ===================== -->
+<div class="modal hidden" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong id="modal-title"></strong>
+      <button class="ghost icon" id="modal-close">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toasts"></div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

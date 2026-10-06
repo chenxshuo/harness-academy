@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+# A tau checkout, only needed to regenerate the specimen excerpts.
+tau/

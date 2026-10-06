@@ -1,0 +1,18 @@
+<!-- Harness Academy mark.
+
+     A shell prompt: chevron and cursor. The earlier draft was a loop with an
+     arrowhead, which read well at 128px and turned to mush at 16 - a tab icon
+     gets about three strokes before it stops being legible, so this spends
+     them on two shapes with wide separation.
+
+     Layout: the chevron spans x 8.5-14.5, the cursor x 17-23.5, so the pair
+     is centred on x=16. Stroke 3.2 at a 32 viewBox is 1.6px at tab size,
+     which still holds its shape after downscaling. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="7.5" fill="#8f4b2e"/>
+  <g fill="none" stroke="#f8f6ef" stroke-width="3.2"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 8.5 11 L 14 16 L 8.5 21"/>
+    <path d="M 17 21.5 L 23.5 21.5"/>
+  </g>
+</svg>

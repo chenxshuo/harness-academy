@@ -1,0 +1,10 @@
+# Cloudflare Pages / Netlify header rules.
+# Pyodide needs long-lived caching; the content bundle is revalidated.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/pyodide-worker.js
+  Cache-Control: public, max-age=3600
+
+/content/*
+  Cache-Control: public, max-age=300, must-revalidate

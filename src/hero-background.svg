@@ -1,0 +1,151 @@
+<!-- Hero banner background.
+
+     Subject is the thing the course teaches, not scenery. The previous
+     version borrowed the landscape vocabulary of schen.app - a low sun,
+     ridges, a frond - which made the two pages look like the same page.
+     This one is drawn from the course's own subject: a transcript on the
+     left, feeding a loop on the right, with the loop reaching across a
+     boundary to touch the world.
+
+     Layout is driven by measurement, not taste. The hero text was measured
+     in SVG coordinates at viewport widths from 480 to 1920:
+
+       width   SVG visible      text occupies
+       1920    x    0..2172     x  478..1419
+       1440    x   95..2077     x  346..1491
+       1100    x  320..1852     x  351..1510
+        900    x  432..1740     x  465..1674
+        480    x  853..1319     x  874..1298
+
+     Two rules follow. Nothing with an edge may enter x 290..1730, because
+     at some width text is there. And at phone widths the visible window is
+     x 853..1319 - entirely text - so the drawing has to degrade to flat
+     washes on its own. It does: every motif lives outside that window, so
+     a narrow screen crops to colour alone rather than to fragments.
+
+     Bars and arcs that meet a margin are extended past it, so a crop
+     shortens a shape instead of slicing it.
+
+     Palette is the site's own, hard-coded because this file is also
+     readable on its own: terra #b86a45, terra-light #d79b77, sage #7f9b92,
+     sand #e8c9a0, paper #f8f6ef, ink #2b2622.
+
+     Viewport 2172x724 (3:1). Inlined into the page by landing.js rather
+     than referenced as a CSS background, because declarative animation does
+     not run in a background-image - browsers render those in secure static
+     mode. `xMidYMin slice` reproduces what `cover` + `center top` did.
+
+     It carries no <style> of its own. Inline SVG shares the document's
+     stylesheet, so a <style> here would leak to the whole page; the motion
+     lives in style.css under `.hero-art`, which also lets one
+     prefers-reduced-motion rule turn all of it off. Class names here are
+     hooks for that, nothing more. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2172 724"
+     preserveAspectRatio="xMidYMin slice" fill="none" aria-hidden="true">
+
+  <rect width="2172" height="724" fill="#f8f6ef"/>
+
+  <!-- ===== washes =================================================
+       The only thing allowed to cross the text. Large, flat and soft:
+       at banner opacity these read as a tint, not as a picture. Never
+       animated - motion under body copy is the one thing that would make
+       the page harder to read. -->
+
+  <path fill="#b86a45" fill-opacity="0.3"
+        d="M0 0 H548 C470 118 356 186 214 232 C132 258 60 316 0 404 Z"/>
+  <path fill="#d79b77" fill-opacity="0.26"
+        d="M0 452 C300 368 640 352 1010 404 C1380 456 1730 448 2172 376
+           L2172 724 H0 Z"/>
+  <path fill="#7f9b92" fill-opacity="0.2"
+        d="M0 596 C340 540 700 548 1060 596 C1420 644 1800 640 2172 584
+           L2172 724 H0 Z"/>
+  <path fill="#b86a45" fill-opacity="0.24"
+        d="M2172 0 V300 C2050 268 1946 206 1880 124 C1856 94 1836 46 1824 0 Z"/>
+
+  <!-- ===== the transcript =========================================
+       Left margin: messages accumulating, one bar each, alternating
+       speaker, fading as they get older. Ends at x 266, clear of the
+       headline at every width.
+
+       Each bar's right edge breathes, staggered down the stack, so the
+       transcript reads as still being written. The left edge is off-canvas
+       at x -40, so the growth has somewhere to come from. -->
+  <g class="hero-bars">
+    <rect x="-40" y="150" width="306" height="26" rx="13" fill="#b86a45" fill-opacity="0.72"/>
+    <rect x="-40" y="196" width="262" height="26" rx="13" fill="#7f9b92" fill-opacity="0.72"/>
+    <rect x="-40" y="242" width="288" height="26" rx="13" fill="#b86a45" fill-opacity="0.6"/>
+    <rect x="-40" y="288" width="240" height="26" rx="13" fill="#7f9b92" fill-opacity="0.6"/>
+    <rect x="-40" y="334" width="274" height="26" rx="13" fill="#b86a45" fill-opacity="0.48"/>
+    <rect x="-40" y="380" width="214" height="26" rx="13" fill="#7f9b92" fill-opacity="0.4"/>
+    <rect x="-40" y="426" width="252" height="26" rx="13" fill="#b86a45" fill-opacity="0.3"/>
+    <rect x="-40" y="472" width="190" height="26" rx="13" fill="#7f9b92" fill-opacity="0.2"/>
+  </g>
+
+  <!-- ===== the loop ===============================================
+       Right of the text, at full size rather than as an arc clipped by
+       the frame: a closed orbit with three stations on it. Centre
+       1838,362, radius 196, so it occupies x 1642..2034 - outside the
+       text zone at every width that shows it at all. -->
+
+  <!-- The orbit, drawn as three arcs with gaps where the stations sit.
+
+       Centre 1838,220 radius 135. It used to be at 362,196: that put the
+       bottom of the circle at SVG y 558, and at a 1920 viewport only
+       y 0..460 is on screen, so the loop was cut off at its widest point
+       and read as two unrelated curves. At 220,135 it spans y 85..355,
+       inside the crop at every width.
+
+       Arc endpoints are computed, not eyeballed: stations sit at -90, 42
+       and 138 degrees, and each arc stops 12 degrees short of one so the
+       gap is even all the way round. -->
+  <g stroke="#2b2622" stroke-opacity="0.72" stroke-width="5"
+     stroke-linecap="round" fill="none">
+    <path d="M1866.1 88.0 A135 135 0 0 1 1954.9 287.5"/>
+    <path d="M1917.4 329.2 A135 135 0 0 1 1758.6 329.2"/>
+    <path d="M1721.1 287.5 A135 135 0 0 1 1809.9 88.0"/>
+  </g>
+
+  <!-- One turn of the loop, as a short arc travelling the full circle.
+       Circumference is 2*pi*135 = 848.2, which is where the dash figures
+       in style.css come from: a 56-long dash and a 792.2 gap is exactly
+       one dash on the path. A <circle> is used rather than the arcs above
+       because its path is continuous, so the pulse crosses the station
+       gaps instead of stopping at them. -->
+  <circle class="hero-orbit-pulse" cx="1838" cy="220" r="135"
+          stroke="#b86a45" stroke-width="8" stroke-linecap="round" fill="none"/>
+
+  <!-- Travel direction: one arrowhead on the orbit, at its right-hand
+       extreme (0 degrees), pointing down-ish along the direction of
+       travel. -->
+  <path fill="#2b2622" fill-opacity="0.8" d="M1958 200 L1990 222 L1956 238 Z"/>
+
+  <!-- Stations: call the model, run a tool, append the result. Each one
+       flares as the pulse reaches it; the timing is in style.css. -->
+  <circle class="hero-station hero-station-model" cx="1838" cy="85" r="26"
+          fill="#b86a45" fill-opacity="0.95"/>
+  <circle class="hero-station hero-station-tool" cx="1938.3" cy="310.3" r="26"
+          fill="#7f9b92" fill-opacity="0.95"/>
+  <circle class="hero-station hero-station-append" cx="1737.7" cy="310.3" r="26"
+          fill="#d79b77" fill-opacity="1"/>
+
+  <!-- ===== the tool boundary ======================================
+       The loop reaches across a wall to touch the world and comes back.
+       The wall runs the full height; the two crossings are the only
+       places anything passes through it. Static on purpose: three moving
+       motifs would be a busy banner, and this one is about where the
+       line is, not about traffic over it.
+
+       Crossings raised with the orbit, so they stay beside it rather than
+       below the visible band. -->
+  <g stroke="#2b2622" stroke-opacity="0.38" stroke-width="4"
+     stroke-dasharray="18 16" fill="none">
+    <path d="M2086 0 V724"/>
+  </g>
+  <g stroke="#2b2622" stroke-opacity="0.66" stroke-width="5"
+     stroke-linecap="round" fill="none">
+    <path d="M2000 196 H2172"/>
+    <path d="M2000 300 H2172"/>
+  </g>
+  <circle cx="2086" cy="196" r="13" fill="#b86a45" fill-opacity="0.95"/>
+  <circle cx="2086" cy="300" r="13" fill="#7f9b92" fill-opacity="0.95"/>
+</svg>
